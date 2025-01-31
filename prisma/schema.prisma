@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+// User model
+model User {
+  id        String   @id @default(uuid())
+  name      String // Added user name
+  email     String   @unique
+  clerkId   String   @unique
+  createdAt DateTime @default(now())
+
+  tests    Test[]
+  attempts Attempt[]
+}
+
+// Test model
+model Test {
+  id        String   @id @default(uuid())
+  type      TestType @default(Academic)
+  year      Int
+  month     Int
+  createdAt DateTime @default(now())
+
+  // Removed modules array since Module is an enum
+  questions Question[]
+  attempts  Attempt[]
+  User      User?      @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+// Question model
+model Question {
+  id String @id @default(uuid())
+
+  testId String // Explicit foreign key
+  test   Test   @relation(fields: [testId], references: [id])
+
+  module   Module
+  content  Json // Question-specific JSON schema
+  answers  Json // Module-specific answer format
+  metadata Json? // Timing, difficulty, etc.
+}
+
+// Attempt model
+model Attempt {
+  id String @id @default(uuid())
+
+  userId String // Explicit foreign key
+  user   User   @relation(fields: [userId], references: [id])
+
+  testId String // Explicit foreign key
+  test   Test   @relation(fields: [testId], references: [id])
+
+  module      Module
+  responses   Json // User answers
+  score       Float? // Auto-calculated for L/R
+  evaluatedAt DateTime? // Manual evaluation time for W/S
+}
+
+// Enums
+enum TestType {
+  Academic
+  General
+}
+
+enum Module {
+  Listening
+  Reading
+  Writing
+  Speaking
+}
