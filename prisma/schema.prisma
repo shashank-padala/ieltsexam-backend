@@ -9,64 +9,61 @@ datasource db {
 
 // schema.prisma
 
-// User model
 model User {
   id        String   @id @default(uuid())
-  name      String // Added user name
+  name      String?
   email     String   @unique
   clerkId   String   @unique
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  tests    Test[]
+  exams    Exam[]
   attempts Attempt[]
 }
 
-// Test model
-model Test {
-  id        String   @id @default(uuid())
-  type      TestType @default(Academic)
+model Exam {
+  id        String       @id @default(uuid())
+  type      ExamType     @default(Academic)
   year      Int
   month     Int
-  createdAt DateTime @default(now())
-
-  // Removed modules array since Module is an enum
+  createdAt DateTime     @default(now())
+  modules   ExamModule[]
   questions Question[]
   attempts  Attempt[]
-  User      User?      @relation(fields: [userId], references: [id])
+  User      User?        @relation(fields: [userId], references: [id])
   userId    String?
 }
 
-// Question model
+model ExamModule {
+  id     String @id @default(uuid())
+  exam   Exam   @relation(fields: [examId], references: [id])
+  examId String
+  module Module
+}
+
 model Question {
-  id String @id @default(uuid())
-
-  testId String // Explicit foreign key
-  test   Test   @relation(fields: [testId], references: [id])
-
-  module   Module
-  content  Json // Question-specific JSON schema
-  answers  Json // Module-specific answer format
-  metadata Json? // Timing, difficulty, etc.
+  id        String   @id @default(uuid())
+  examId    String
+  exam      Exam     @relation(fields: [examId], references: [id])
+  module    Module
+  content   Json
+  answers   Json
+  createdAt DateTime @default(now())
 }
 
-// Attempt model
 model Attempt {
-  id String @id @default(uuid())
-
-  userId String // Explicit foreign key
-  user   User   @relation(fields: [userId], references: [id])
-
-  testId String // Explicit foreign key
-  test   Test   @relation(fields: [testId], references: [id])
-
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  examId      String
+  exam        Exam      @relation(fields: [examId], references: [id])
   module      Module
-  responses   Json // User answers
-  score       Float? // Auto-calculated for L/R
-  evaluatedAt DateTime? // Manual evaluation time for W/S
+  responses   Json
+  score       Float?
+  completedAt DateTime?
 }
 
-// Enums
-enum TestType {
+enum ExamType {
   Academic
   General
 }
