@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateAttemptDto } from './dto/create-attempt.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AttemptsService {
@@ -11,7 +12,8 @@ export class AttemptsService {
       data: {
         userId: dto.userId,
         examId: dto.examId,
-        module: dto.module
+        module: dto.module,
+        responses: Prisma.JsonNull // Add default empty responses
       }
     });
   }
