@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  getConfig(): string {
+    return 'Global Config Placeholder';
+  }
+
+  log(message: string): void {
+    console.log(`[Global Log] ${message}`);
   }
 }
