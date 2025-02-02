@@ -1,13 +1,15 @@
+// Prisma Client Generator
 generator client {
   provider = "prisma-client-js"
 }
 
+// Specify the database connection
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-// schema.prisma
+// Prisma Schema
 
 model User {
   id        String   @id @default(uuid())
@@ -27,9 +29,15 @@ model Exam {
   year      Int
   month     Int
   createdAt DateTime     @default(now())
+
   modules   ExamModule[]
+  passages  Passage[]
   questions Question[]
+  writingTasks WritingTask[]
+  speakingQuestions SpeakingQuestion[]
+  mediaAssets MediaAsset[]
   attempts  Attempt[]
+
   User      User?        @relation(fields: [userId], references: [id])
   userId    String?
 }
@@ -41,16 +49,72 @@ model ExamModule {
   module Module
 }
 
-model Question {
+// Reading-Specific Table
+model Passage {
   id        String   @id @default(uuid())
   examId    String
   exam      Exam     @relation(fields: [examId], references: [id])
+  title     String
+  text      String
+  questions Question[]
+}
+
+// Listening-Specific Table for Audio & Maps
+model MediaAsset {
+  id         String @id @default(uuid())
+  examId     String
+  exam       Exam   @relation(fields: [examId], references: [id])
+  module     Module
+  type       MediaType  // Audio, Image
+  url        String
+  description String?
+  createdAt  DateTime @default(now())
+
+  // Back-relations for Question & WritingTask models
+  questions Question[]   // A media asset may be linked to multiple questions
+  writingTasks WritingTask[]  // A media asset may be linked to multiple writing tasks
+}
+
+// Common Question Table for Reading & Listening
+model Question {
+  id        String   @id @default(uuid())
   module    Module
+  passageId String?  // Used only for Reading questions
+  passage   Passage? @relation(fields: [passageId], references: [id])
+  examId    String
+  exam      Exam     @relation(fields: [examId], references: [id])
+  type      QuestionType
   content   Json
-  answers   Json
+  options   Json?    // Only for MCQ-type questions
+  correct_answer String
+  mediaAssetId String?  // Optional link to an image/audio file (for Listening)
+  mediaAsset MediaAsset? @relation(fields: [mediaAssetId], references: [id])
   createdAt DateTime @default(now())
 }
 
+// Writing-Specific Table
+model WritingTask {
+  id         String   @id @default(uuid())
+  examId     String
+  exam       Exam     @relation(fields: [examId], references: [id])
+  taskNumber Int      // Task 1 or Task 2
+  question   String
+  mediaAssetId String?  // Optional: Link to chart/diagram image (for Task 1)
+  mediaAsset MediaAsset? @relation(fields: [mediaAssetId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+// Speaking-Specific Table
+model SpeakingQuestion {
+  id        String   @id @default(uuid())
+  examId    String
+  exam      Exam     @relation(fields: [examId], references: [id])
+  part      SpeakingPart  // Part 1, 2, or 3
+  question  String
+  createdAt DateTime @default(now())
+}
+
+// Tracking User Attempts
 model Attempt {
   id          String    @id @default(uuid())
   userId      String
@@ -63,6 +127,7 @@ model Attempt {
   completedAt DateTime?
 }
 
+// Enums
 enum ExamType {
   Academic
   General
@@ -73,4 +138,27 @@ enum Module {
   Reading
   Writing
   Speaking
+}
+
+enum QuestionType {
+  MCQ
+  TFNG // True, False, Not-Given
+  YNNG // Yes, No, Not-Given
+  Matching // Eg: Title Matching
+  SentenceCompletion
+  SummaryCompletion
+  TableCompletion
+  DiagramLabelCompletion
+  ShortAnswer
+}
+
+enum MediaType {
+  Audio
+  Image
+}
+
+enum SpeakingPart {
+  Part1
+  Part2
+  Part3
 }
