@@ -125,6 +125,7 @@ model Attempt {
   responses   Json
   score       Float?
   completedAt DateTime?
+  createdAt   DateTime @default(now())
 }
 
 // Enums

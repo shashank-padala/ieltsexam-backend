@@ -9,6 +9,7 @@ import { ListeningModule } from './listening/listening.module';
 import { WritingModule } from './writing/writing.module';
 import { SpeakingModule } from './speaking/speaking.module';
 import { MediaModule } from './media/media.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { MediaModule } from './media/media.module';
     WritingModule,
     SpeakingModule,
     MediaModule,
+    UsersModule,
   ],
   controllers: [AppController],  
   providers: [AppService],
