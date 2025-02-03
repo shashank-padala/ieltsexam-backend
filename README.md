@@ -1,3 +1,12 @@
+### **📌 `README.md` for `ieltsexam-backend` (Internal Developer Onboarding Guide)**
+
+Here's the **full `README.md`** file that you can directly use for onboarding new team members.
+
+* * * * *
+
+### **📌 Full `README.md` for `ieltsexam-backend`**
+
+```
 # 🎯 IELTS Exam Backend - Developer Onboarding Guide
 
 ## 🚀 Overview
@@ -9,6 +18,7 @@ Welcome to the **IELTS Exam Backend**! This is a private internal project design
 - **API Documentation via Swagger**
 
 ---
+
 ## 🛠️ Tech Stack
 - **Backend:** NestJS (TypeScript)
 - **Database:** PostgreSQL (Prisma ORM)
@@ -18,47 +28,59 @@ Welcome to the **IELTS Exam Backend**! This is a private internal project design
 - **API Documentation:** Swagger (OpenAPI)
 
 ---
+
 ## 📌 **1. Access & Permissions**
 Before you start, ensure you have:
-✅ **Access to the private GitHub repository**  
-✅ **Database Credentials (`DATABASE_URL`)** (from the team lead)  
-✅ **Render API Hosting Access** (if deploying)  
+✅ **Access to the private GitHub repository**
+✅ **Database Credentials (`DATABASE_URL`)** (from the team lead)
+✅ **Render API Hosting Access** (if deploying)
 ✅ **OpenAI API Key** (for Writing/Speaking evaluation)
 
 ---
+
 ## 📌 **2. Setting Up the Project Locally**
 Follow these steps to **set up the backend on your local machine**.
 
 ### **1️⃣ Clone the Repository**
 ```bash
-git clone https://github.com/shashank-padala/ieltsexam-backend.git
-cd ieltsexam-backend```
+git clone https://github.com/YOUR_TEAM/ieltsexam-backend.git
+cd ieltsexam-backend
+
+```
 
 ### **2️⃣ Install Dependencies**
 
-```bash
-npm install```
+```
+npm install
+
+```
 
 ### **3️⃣ Set Up Environment Variables**
 
 Ask the team lead for the **`.env`** file, or manually create one:
 
-```env
-DATABASE_URL=postgres_connection_url
-OPENAI_API_KEY=openai_api_key
-PORT=3000```
+```
+DATABASE_URL=your_postgres_connection_url
+OPENAI_API_KEY=your_openai_api_key
+PORT=3000
+
+```
 
 ### **4️⃣ Set Up the Database**
 
 Apply **migrations** to sync the database schema:
 
-```bash
-npx prisma migrate dev --name init```
+```
+npx prisma migrate dev --name init
+
+```
 
 ### **5️⃣ Start the Development Server**
 
-```bash
-npm run start:dev```
+```
+npm run start:dev
+
+```
 
 > The API will be available at: `http://localhost:3000`
 
@@ -69,9 +91,10 @@ npm run start:dev```
 
 Once the server is running, you can access the **API Documentation via Swagger UI**:
 
-bash:
+```
+http://localhost:3000/api/docs
 
-`http://localhost:3000/api/docs`
+```
 
 > Use this to **explore and test APIs interactively.**
 
@@ -90,15 +113,19 @@ To see the current **database structure**, check `prisma/schema.prisma`.
 
 If changes are made to the schema, run:
 
-```bash
-npx prisma migrate dev --name update_schema```
+```
+npx prisma migrate dev --name update_schema
+
+```
 
 ### **View & Edit Data via Prisma Studio**
 
 To easily inspect or modify database records, use:
 
-```bash
-npx prisma studio```
+```
+npx prisma studio
+
+```
 
 * * * * *
 
@@ -116,16 +143,20 @@ npx prisma studio```
 
 Use **Prettier & ESLint** to maintain consistent code style:
 
-```bash
+```
 npm run lint
-npm run format```
+npm run format
+
+```
 
 ### **🔹 3. Running Tests**
 
 Run **unit tests**:
 
-```bash
-npm run test```
+```
+npm run test
+
+```
 
 * * * * *
 
@@ -141,7 +172,10 @@ npm run test```
 
 > 🚀 API will be accessible at:
 
-`https://ieltsexam-backend.onrender.com`
+```
+https://your-render-app-url.com
+
+```
 
 * * * * *
 
@@ -167,7 +201,15 @@ For **any questions, feature discussions, or bugs**, use:
 
 * * * * *
 
+👥 **Development Team**
+-----------------------
+
+-   **[Your Name]** - Lead Developer
+-   **[Team Member 2]** - Backend Developer
+-   **[Team Member 3]** - API Specialist
+
+* * * * *
 
 💡 **Found an issue?** Open a **GitHub Issue** or create a **Pull Request (PR)**!
 
-📩 Need help? **Reach out to the tech lead** 🚀
+📩 Need help? **Reach out to the team lead!** 🚀
