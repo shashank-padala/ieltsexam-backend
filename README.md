@@ -22,8 +22,8 @@ Welcome to the **IELTS Exam Backend**! This is a private internal project design
 
 ## 📌 **1. Access & Permissions**
 Before you start, ensure you have:
-- ✅ **Access to the private GitHub repository**\
-- ✅ **Database Credentials (`DATABASE_URL`)** (from the team lead)\
+- ✅ **Access to the private GitHub repository**
+- ✅ **Database Credentials (`DATABASE_URL`)** (from the team lead)
 - ✅ **Render API Hosting Access** (if deploying)
 - ✅ **OpenAI API Key** (for Writing/Speaking evaluation)
 
