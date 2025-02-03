@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Param, Body, Query } from '@nestjs/common';
 import { ReadingService } from './reading.service';
+import { QuestionType } from '@prisma/client';
 
 @Controller('reading')
 export class ReadingController {
@@ -31,10 +32,17 @@ export class ReadingController {
   @Post('/question')
   async createReadingQuestion(
     @Body('passageId') passageId: string,
+    @Body('questionType') questionType: string,
     @Body('questionText') questionText: string,
     @Body('correctAnswer') correctAnswer: string,
     @Body('options') options: string[]
   ) {
-    return this.readingService.createReadingQuestion(passageId, questionText, correctAnswer, options);
+    return this.readingService.createReadingQuestion(
+      passageId,
+      questionType as QuestionType, // ✅ Convert string to QuestionType Enum
+      questionText,
+      correctAnswer,
+      options
+    );
   }
 }

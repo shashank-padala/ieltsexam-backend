@@ -1,5 +1,7 @@
 import { Controller, Get, Post, Param, Body } from '@nestjs/common';
 import { ListeningService } from './listening.service';
+import { QuestionType } from '@prisma/client'; 
+
 
 @Controller('listening')
 export class ListeningController {
@@ -21,6 +23,7 @@ export class ListeningController {
   @Post('/question')
   async createListeningQuestion(
     @Body('examId') examId: string,
+    @Body('questionType') questionType: string,
     @Body('questionText') questionText: string,
     @Body('correctAnswer') correctAnswer: string,
     @Body('options') options: string[],
@@ -28,6 +31,7 @@ export class ListeningController {
   ) {
     return this.listeningService.createListeningQuestion(
       examId,
+      questionType as QuestionType, // ✅ Convert string to QuestionType Enum
       questionText,
       correctAnswer,
       options,

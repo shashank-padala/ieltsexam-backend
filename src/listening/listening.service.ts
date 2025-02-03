@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Module, MediaType } from '@prisma/client';  // ✅ Import Enums
+import { Module, MediaType, QuestionType } from '@prisma/client';  // ✅ Import Enums
+
 
 @Injectable()
 export class ListeningService {
@@ -23,6 +24,7 @@ export class ListeningService {
   // ✅ Create a new Listening question with an optional media asset
   async createListeningQuestion(
     examId: string,
+    questionType: QuestionType,
     questionText: string,
     correctAnswer: string,
     options: string[],
@@ -36,7 +38,7 @@ export class ListeningService {
       data: {
         examId,
         module: Module.Listening,
-        type: 'MCQ',
+        type: questionType,
         content: { question: questionText },
         correct_answer: correctAnswer,
         options: options,

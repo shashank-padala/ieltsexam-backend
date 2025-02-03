@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { Module, QuestionType } from '@prisma/client';
 
 @Injectable()
 export class ReadingService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService) {}
 
   // ✅ Get all Reading passages for an exam
   async getReadingPassages(examId: string) {
@@ -37,29 +39,31 @@ export class ReadingService {
   // ✅ Create a new Reading question
   async createReadingQuestion(
     passageId: string,
+    questionType: QuestionType,
     questionText: string,
     correctAnswer: string,
-    options: string[]
+    options?: string[]
   ) {
-    // ✅ Fetch the passage to get the associated `examId`
+    // ✅ Fetch passage to get examId
     const passage = await this.prisma.passage.findUnique({
       where: { id: passageId },
-      select: { examId: true }, // ✅ Ensure we get the examId
+      select: { examId: true },
     });
-  
+
     if (!passage) {
       throw new Error('Passage not found');
     }
-  
+
+    // ✅ Create Reading Question
     return this.prisma.question.create({
       data: {
-        examId: passage.examId, // ✅ Ensure `examId` is included
+        examId: passage.examId,
         passageId,
-        module: 'Reading',
-        type: 'MCQ', // ✅ Assume multiple-choice for now
+        module: Module.Reading,
+        type: questionType, // ✅ Dynamic type
         content: { question: questionText },
         correct_answer: correctAnswer,
-        options: options,
+        options: questionType === QuestionType.MCQ ? options : undefined, // ✅ Only MCQ gets options
       },
     });
   }
