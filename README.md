@@ -36,14 +36,12 @@ Follow these steps to **set up the backend on your local machine**.
 ```bash
 git clone https://github.com/YOUR_TEAM/ieltsexam-backend.git
 cd ieltsexam-backend
-
 ```
 
 ### **2️⃣ Install Dependencies**
 
 ```
 npm install
-
 ```
 
 ### **3️⃣ Set Up Environment Variables**
@@ -51,10 +49,12 @@ npm install
 Ask the team lead for the **`.env`** file, or manually create one:
 
 ```
-DATABASE_URL=your_postgres_connection_url
-OPENAI_API_KEY=your_openai_api_key
+DATABASE_URL=your-database-url
+PORT=4000
+CLERK_SECRET_KEY=your-clerk-secret-key
+FRONTEND_URL=https://ieltsexam.ai
+OPENAI_API_KEY=your-openai-key
 PORT=3000
-
 ```
 
 ### **4️⃣ Set Up the Database**
@@ -63,14 +63,12 @@ Apply **migrations** to sync the database schema:
 
 ```
 npx prisma migrate dev --name init
-
 ```
 
 ### **5️⃣ Start the Development Server**
 
 ```
 npm run start:dev
-
 ```
 
 > The API will be available at: `http://localhost:3000`
@@ -84,7 +82,6 @@ Once the server is running, you can access the **API Documentation via Swagger U
 
 ```
 http://localhost:3000/api/docs
-
 ```
 
 > Use this to **explore and test APIs interactively.**
@@ -106,7 +103,6 @@ If changes are made to the schema, run:
 
 ```
 npx prisma migrate dev --name update_schema
-
 ```
 
 ### **View & Edit Data via Prisma Studio**
@@ -115,7 +111,6 @@ To easily inspect or modify database records, use:
 
 ```
 npx prisma studio
-
 ```
 
 * * * * *
@@ -137,7 +132,6 @@ Use **Prettier & ESLint** to maintain consistent code style:
 ```
 npm run lint
 npm run format
-
 ```
 
 ### **🔹 3. Running Tests**
@@ -146,7 +140,6 @@ Run **unit tests**:
 
 ```
 npm run test
-
 ```
 
 * * * * *
@@ -164,8 +157,7 @@ npm run test
 > 🚀 API will be accessible at:
 
 ```
-https://your-render-app-url.com
-
+https://ieltsexam-backend.onrender.com
 ```
 
 * * * * *
