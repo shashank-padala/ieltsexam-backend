@@ -168,7 +168,7 @@ https://ieltsexam-backend.onrender.com
 For **any questions, feature discussions, or bugs**, use:
 
 -   📝 **Slack Team Channel**
--   🛠️ **JIRA/Trello for Task Tracking**
+-   🛠️ **Notion/Linear for Task Tracking**
 -   📩 **Directly ask the Team Lead**
 
 * * * * *
@@ -184,12 +184,11 @@ For **any questions, feature discussions, or bugs**, use:
 
 * * * * *
 
-👥 **Development Team**
+👥 **Team**
 -----------------------
 
--   **[Your Name]** - Lead Developer
+-   **[Shashank Padala]** - Product Manager/Lead Developer
 -   **[Team Member 2]** - Backend Developer
--   **[Team Member 3]** - API Specialist
 
 * * * * *
 
