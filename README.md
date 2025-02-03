@@ -1,12 +1,3 @@
-### **📌 `README.md` for `ieltsexam-backend` (Internal Developer Onboarding Guide)**
-
-Here's the **full `README.md`** file that you can directly use for onboarding new team members.
-
-* * * * *
-
-### **📌 Full `README.md` for `ieltsexam-backend`**
-
-```
 # 🎯 IELTS Exam Backend - Developer Onboarding Guide
 
 ## 🚀 Overview
